@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0F0CF8E096CBA702C09286B3 /* Pods_OneRoomTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8003F4AC6F7A4AD54B2DA80 /* Pods_OneRoomTests.framework */; };
+		D80961062D290FCC00993850 /* Pods_OneRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC947FA65078B664797B180 /* Pods_OneRoom.framework */; };
+		D80961072D290FCC00993850 /* Pods_OneRoom.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC947FA65078B664797B180 /* Pods_OneRoom.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F90846A25FD424D93D8BEC9C /* Pods_OneRoom_OneRoomUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F716221B07B6E650F8743C5 /* Pods_OneRoom_OneRoomUITests.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		D8C0CF962D27C84400AB5D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,10 +30,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D80961082D290FCC00993850 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D80961072D290FCC00993850 /* Pods_OneRoom.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		03658F2AD8597B5063D62F2E /* Pods-OneRoom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneRoom.release.xcconfig"; path = "Target Support Files/Pods-OneRoom/Pods-OneRoom.release.xcconfig"; sourceTree = "<group>"; };
+		52350EAA7F24FD9C46D70DF6 /* Pods-OneRoomTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneRoomTests.debug.xcconfig"; path = "Target Support Files/Pods-OneRoomTests/Pods-OneRoomTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6D10A40105FE6B693C114312 /* Pods-OneRoom-OneRoomUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneRoom-OneRoomUITests.release.xcconfig"; path = "Target Support Files/Pods-OneRoom-OneRoomUITests/Pods-OneRoom-OneRoomUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7EC947FA65078B664797B180 /* Pods_OneRoom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneRoom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F716221B07B6E650F8743C5 /* Pods_OneRoom_OneRoomUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneRoom_OneRoomUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8FC6BB054A36970DDA731AF /* Pods-OneRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneRoom.debug.xcconfig"; path = "Target Support Files/Pods-OneRoom/Pods-OneRoom.debug.xcconfig"; sourceTree = "<group>"; };
+		B36EF0FB25B09E63EFB6BA95 /* Pods-OneRoom-OneRoomUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneRoom-OneRoomUITests.debug.xcconfig"; path = "Target Support Files/Pods-OneRoom-OneRoomUITests/Pods-OneRoom-OneRoomUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C8003F4AC6F7A4AD54B2DA80 /* Pods_OneRoomTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneRoomTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C0CF7F2D27C84300AB5D8A /* OneRoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneRoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C0CF952D27C84400AB5D8A /* OneRoomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneRoomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C0CF9F2D27C84400AB5D8A /* OneRoomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneRoomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAC06E16BACE76CDFCFDDA26 /* Pods-OneRoomTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneRoomTests.release.xcconfig"; path = "Target Support Files/Pods-OneRoomTests/Pods-OneRoomTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D80961062D290FCC00993850 /* Pods_OneRoom.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0CF8E096CBA702C09286B3 /* Pods_OneRoomTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,12 +111,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90846A25FD424D93D8BEC9C /* Pods_OneRoom_OneRoomUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5BA88F12FB64FC9F7ACFA8A5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A8FC6BB054A36970DDA731AF /* Pods-OneRoom.debug.xcconfig */,
+				03658F2AD8597B5063D62F2E /* Pods-OneRoom.release.xcconfig */,
+				B36EF0FB25B09E63EFB6BA95 /* Pods-OneRoom-OneRoomUITests.debug.xcconfig */,
+				6D10A40105FE6B693C114312 /* Pods-OneRoom-OneRoomUITests.release.xcconfig */,
+				52350EAA7F24FD9C46D70DF6 /* Pods-OneRoomTests.debug.xcconfig */,
+				FAC06E16BACE76CDFCFDDA26 /* Pods-OneRoomTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		91D60ED3A4390DC15905FEAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7EC947FA65078B664797B180 /* Pods_OneRoom.framework */,
+				8F716221B07B6E650F8743C5 /* Pods_OneRoom_OneRoomUITests.framework */,
+				C8003F4AC6F7A4AD54B2DA80 /* Pods_OneRoomTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D8C0CF762D27C84300AB5D8A = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +148,8 @@
 				D8C0CF982D27C84400AB5D8A /* OneRoomTests */,
 				D8C0CFA22D27C84400AB5D8A /* OneRoomUITests */,
 				D8C0CF802D27C84300AB5D8A /* Products */,
+				5BA88F12FB64FC9F7ACFA8A5 /* Pods */,
+				91D60ED3A4390DC15905FEAF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,9 +170,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8C0CFA82D27C84400AB5D8A /* Build configuration list for PBXNativeTarget "OneRoom" */;
 			buildPhases = (
+				CA63B43BF2769ED6136D4F15 /* [CP] Check Pods Manifest.lock */,
 				D8C0CF7B2D27C84300AB5D8A /* Sources */,
 				D8C0CF7C2D27C84300AB5D8A /* Frameworks */,
 				D8C0CF7D2D27C84300AB5D8A /* Resources */,
+				0DCFB8E7EA737D865B9CB3A0 /* [CP] Embed Pods Frameworks */,
+				D80961082D290FCC00993850 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,8 +185,6 @@
 				D8C0CF812D27C84300AB5D8A /* OneRoom */,
 			);
 			name = OneRoom;
-			packageProductDependencies = (
-			);
 			productName = OneRoom;
 			productReference = D8C0CF7F2D27C84300AB5D8A /* OneRoom.app */;
 			productType = "com.apple.product-type.application";
@@ -134,6 +193,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8C0CFAD2D27C84400AB5D8A /* Build configuration list for PBXNativeTarget "OneRoomTests" */;
 			buildPhases = (
+				BCA397D430568EDD40C519AA /* [CP] Check Pods Manifest.lock */,
 				D8C0CF912D27C84400AB5D8A /* Sources */,
 				D8C0CF922D27C84400AB5D8A /* Frameworks */,
 				D8C0CF932D27C84400AB5D8A /* Resources */,
@@ -147,8 +207,6 @@
 				D8C0CF982D27C84400AB5D8A /* OneRoomTests */,
 			);
 			name = OneRoomTests;
-			packageProductDependencies = (
-			);
 			productName = OneRoomTests;
 			productReference = D8C0CF952D27C84400AB5D8A /* OneRoomTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -157,9 +215,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8C0CFB02D27C84400AB5D8A /* Build configuration list for PBXNativeTarget "OneRoomUITests" */;
 			buildPhases = (
+				DAE9FE0F357FAB2A9EE20E30 /* [CP] Check Pods Manifest.lock */,
 				D8C0CF9B2D27C84400AB5D8A /* Sources */,
 				D8C0CF9C2D27C84400AB5D8A /* Frameworks */,
 				D8C0CF9D2D27C84400AB5D8A /* Resources */,
+				A03BD6FA6DE3F2F02357D18A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -170,8 +230,6 @@
 				D8C0CFA22D27C84400AB5D8A /* OneRoomUITests */,
 			);
 			name = OneRoomUITests;
-			packageProductDependencies = (
-			);
 			productName = OneRoomUITests;
 			productReference = D8C0CF9F2D27C84400AB5D8A /* OneRoomUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -244,6 +302,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0DCFB8E7EA737D865B9CB3A0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneRoom/Pods-OneRoom-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneRoom/Pods-OneRoom-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OneRoom/Pods-OneRoom-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A03BD6FA6DE3F2F02357D18A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneRoom-OneRoomUITests/Pods-OneRoom-OneRoomUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneRoom-OneRoomUITests/Pods-OneRoom-OneRoomUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OneRoom-OneRoomUITests/Pods-OneRoom-OneRoomUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCA397D430568EDD40C519AA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneRoomTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA63B43BF2769ED6136D4F15 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneRoom-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DAE9FE0F357FAB2A9EE20E30 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneRoom-OneRoomUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D8C0CF7B2D27C84300AB5D8A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -284,6 +445,7 @@
 /* Begin XCBuildConfiguration section */
 		D8C0CFA92D27C84400AB5D8A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8FC6BB054A36970DDA731AF /* Pods-OneRoom.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -293,8 +455,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneRoom/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -312,6 +474,7 @@
 		};
 		D8C0CFAA2D27C84400AB5D8A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03658F2AD8597B5063D62F2E /* Pods-OneRoom.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -321,8 +484,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneRoom/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -375,7 +538,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -438,7 +601,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -459,6 +622,7 @@
 		};
 		D8C0CFAE2D27C84400AB5D8A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 52350EAA7F24FD9C46D70DF6 /* Pods-OneRoomTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -478,6 +642,7 @@
 		};
 		D8C0CFAF2D27C84400AB5D8A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAC06E16BACE76CDFCFDDA26 /* Pods-OneRoomTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -497,6 +662,7 @@
 		};
 		D8C0CFB12D27C84400AB5D8A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B36EF0FB25B09E63EFB6BA95 /* Pods-OneRoom-OneRoomUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -514,6 +680,7 @@
 		};
 		D8C0CFB22D27C84400AB5D8A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D10A40105FE6B693C114312 /* Pods-OneRoom-OneRoomUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
