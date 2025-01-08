@@ -22,7 +22,8 @@ class OnboardingViewController: UIViewController {
     
     private let loginLabel: UILabel = {
         let label = UILabel()
-        label.text = "If you have an account, please login"
+        label.numberOfLines = 2
+        label.text = "If you have an account, please login \n" + "or create a new account"
         label.font = .systemFont(ofSize: 20, weight: .thin)
         label.textColor = .black
         label.textAlignment = .center
@@ -40,6 +41,24 @@ class OnboardingViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemBlue
         button.isHidden = true // 처음에는 숨김
+        return button
+    }()
+    
+    private let createAccountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Don't have an account? Create one!"
+        label.font = .systemFont(ofSize: 10, weight: .thin)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
+    private let createAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Create Account", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.isHidden = true
         return button
     }()
     
