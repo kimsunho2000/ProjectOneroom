@@ -1,19 +1,14 @@
-//
-//  OnboardingViewController.swift
-//  OneRoom
-//
-//  Created by 김선호 on 1/4/25.
-//
-
 import UIKit
 import SnapKit
-import SwiftUI
+import RxSwift
+import RxCocoa
 
 class OnboardingViewController: UIViewController {
+    private let disposeBag = DisposeBag()
+    private let viewModel = OnboardingViewModel()
     
     private let welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome to OneRoom!"
         label.font = .systemFont(ofSize: 35, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
@@ -23,41 +18,26 @@ class OnboardingViewController: UIViewController {
     private let loginLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.text = "If you have an account, please login \n" + "or create a new account"
         label.font = .systemFont(ofSize: 20, weight: .thin)
         label.textColor = .black
         label.textAlignment = .center
         label.isHidden = true
         return label
     }()
-
     
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Click to Login", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize:  20)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemBlue
-        button.isHidden = true // 처음에는 숨김
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20)
+        button.isHidden = true
         return button
-    }()
-    
-    private let createAccountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Don't have an account? Create one!"
-        label.font = .systemFont(ofSize: 10, weight: .thin)
-        label.textColor = .black
-        label.textAlignment = .center
-        label.isHidden = true
-        return label
     }()
     
     private let createAccountButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Create Account", for: .normal)
-        button.setTitleColor(.white, for: .normal)
         button.isHidden = true
         return button
     }()
@@ -65,32 +45,92 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        setupLayout()
+        bindViewModel()
+    }
+    
+    private func setupLayout() {
         view.addSubview(welcomeLabel)
         view.addSubview(loginLabel)
         view.addSubview(loginButton)
+        view.addSubview(createAccountButton)
         
         // 초기 위치
         welcomeLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         
-        loginLabel.snp.makeConstraints{ make in
+        loginLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(welcomeLabel.snp.bottom).offset(325)
+            make.top.equalTo(welcomeLabel.snp.bottom).offset(450)
         }
         
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(welcomeLabel.snp.bottom).offset(250)
+            make.top.equalTo(welcomeLabel.snp.bottom).offset(350)
             make.width.equalTo(300)
             make.height.equalTo(50)
         }
+        
+        createAccountButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(loginLabel.snp.bottom).offset(30)
+            make.width.equalTo(300)
+        }
+    }
+    
+    private func bindViewModel() {
+        // Input 생성
+        let input = OnboardingViewModel.Input(
+            loginButtonTap: loginButton.rx.tap.asObservable(),
+            createAccountButtonTap: createAccountButton.rx.tap.asObservable()
+        )
+        
+        // ViewModel의 Output과 View 바인딩
+        let output = viewModel.transform(input: input)
+        
+        output.welcomeMessage
+            .drive(welcomeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.loginMessage
+            .drive(loginLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.loginButtonTitle
+            .drive(loginButton.rx.title(for: .normal))
+            .disposed(by: disposeBag)
+        
+        output.createAccountButtonTitle
+            .drive(createAccountButton.rx.title(for: .normal))
+            .disposed(by: disposeBag)
+        
+        output.navigateToLogin
+            .subscribe(onNext: { [weak self] in
+                self?.navigateToLoginScreen()
+            })
+            .disposed(by: disposeBag)
+        
+        output.navigateToCreateAccount
+            .subscribe(onNext: { [weak self] in
+                self?.navigateToCreateAccountScreen()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func navigateToLoginScreen() {
+        print("Navigate to Login Screen")
+        // 실제 네비게이션 로직 추가
+    }
+    
+    private func navigateToCreateAccountScreen() {
+        print("Navigate to Create Account Screen")
+        // 실제 네비게이션 로직 추가
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // 텍스트 이동 애니메이션
         UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseInOut, animations: {
             self.welcomeLabel.snp.remakeConstraints { make in
                 make.centerX.equalToSuperview()
@@ -98,37 +138,10 @@ class OnboardingViewController: UIViewController {
             }
             self.view.layoutIfNeeded()
         }) { _ in
-            // 애니메이션 완료 후 UI 표시
             self.loginLabel.isHidden = false
             self.loginButton.isHidden = false
+            self.createAccountButton.isHidden = false
+            self.view.setNeedsLayout()
         }
     }
 }
-
-// MARK: - SwiftUI Preview for UIKit
-
-#if DEBUG
-struct OnboardingViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        ViewControllerPreview {
-            OnboardingViewController()
-        }
-    }
-}
-
-struct ViewControllerPreview<ViewController: UIViewController>: UIViewControllerRepresentable {
-    let viewControllerBuilder: () -> ViewController
-
-    init(_ builder: @escaping () -> ViewController) {
-        self.viewControllerBuilder = builder
-    }
-
-    func makeUIViewController(context: Context) -> ViewController {
-        return viewControllerBuilder()
-    }
-
-    func updateUIViewController(_ uiViewController: ViewController, context: Context) {
-        // No updates needed for preview
-    }
-}
-#endif
