@@ -105,7 +105,7 @@ class OnboardingViewController: UIViewController {
             .drive(createAccountButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
         
-        output.navigateToLogin
+        output.navigateToLoginView
             .subscribe(onNext: { [weak self] in
                 self?.navigateToLoginScreen()
             })

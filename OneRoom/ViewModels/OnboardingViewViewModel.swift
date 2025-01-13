@@ -15,7 +15,7 @@ class OnboardingViewModel {
         let loginMessage: Driver<String>
         let loginButtonTitle: Driver<String>
         let createAccountButtonTitle: Driver<String>
-        let navigateToLogin: Observable<Void>
+        let navigateToLoginView: Observable<Void>
         let navigateToCreateAccount: Observable<Void>
     }
     
@@ -27,7 +27,7 @@ class OnboardingViewModel {
         let createAccountButtonTitle = Driver.just("Create Account")
         
         // 버튼 탭 이벤트 처리
-        let navigateToLogin = input.loginButtonTap
+        let navigateToLoginView = input.loginButtonTap
         let navigateToCreateAccount = input.createAccountButtonTap
         
         return Output(
@@ -35,7 +35,7 @@ class OnboardingViewModel {
             loginMessage: loginMessage,
             loginButtonTitle: loginButtonTitle,
             createAccountButtonTitle: createAccountButtonTitle,
-            navigateToLogin: navigateToLogin,
+            navigateToLoginView: navigateToLoginView,
             navigateToCreateAccount: navigateToCreateAccount
         )
     }
