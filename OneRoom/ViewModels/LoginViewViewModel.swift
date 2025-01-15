@@ -1,17 +1,11 @@
-//
-//  LoginViewViewModel.swift
-//  OneRoom
-//
-//  Created by 김선호 on 1/13/25.
-//
-
-import UIKit
 import RxSwift
 import RxCocoa
 
-class LoginViewViewModel  {
+class LoginViewViewModel {
     
     struct Input {
+        let idText: Observable<String>
+        let pwText: Observable<String>
         let loginButtonTap: Observable<Void>
         let findAccountButtonTap: Observable<Void>
     }
@@ -26,11 +20,22 @@ class LoginViewViewModel  {
         let navigateToFindAccount: Observable<Void>
     }
     
+    private let disposeBag = DisposeBag()
+    
     func transform(input: Input) -> Output {
         let idLabel = Driver.just("ID")
         let pwLabel = Driver.just("PW")
-        let idTextField = input.loginButtonTap.map(\.text).asDriver(onErrorJustReturn: "")
-        let pwTextField = input.loginButtonTap.map(\.text).asDriver(onErrorJustReturn: "")
+        
+        // ID와 PW 텍스트 필드의 값을 그대로 출력
+        let idTextField = input.idText.asDriver(onErrorJustReturn: "")
+        let pwTextField = input.pwText.asDriver(onErrorJustReturn: "")
+        
+        // 로그인 버튼 활성화: ID와 PW가 모두 비어있지 않을 때
+        let loginButtonEnabled = Observable
+            .combineLatest(input.idText, input.pwText) { !$0.isEmpty && !$1.isEmpty }
+            .asDriver(onErrorJustReturn: false)
+        
+        // 버튼 탭 이벤트 전달
         let navigateToLogin = input.loginButtonTap
         let navigateToFindAccount = input.findAccountButtonTap
         
@@ -41,7 +46,7 @@ class LoginViewViewModel  {
             pwTextField: pwTextField,
             loginButtonEnabled: loginButtonEnabled,
             navigateToLogin: navigateToLogin,
-            navigateToFindAccount: navigateToFindAccount)
+            navigateToFindAccount: navigateToFindAccount
+        )
     }
-
 }

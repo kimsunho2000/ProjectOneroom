@@ -120,7 +120,8 @@ class OnboardingViewController: UIViewController {
     
     private func navigateToLoginScreen() {
         print("Navigate to Login Screen")
-        // 실제 네비게이션 로직 추가
+        let vc = LoginViewController()
+        present(vc,animated: true)
     }
     
     private func navigateToCreateAccountScreen() {
