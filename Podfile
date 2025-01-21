@@ -7,6 +7,7 @@ target 'OneRoom' do
 pod 'RxSwift', '~> 6.8.0'
 pod 'RxCocoa', '~> 6.8.0'
 pod 'SnapKit', '~> 5.7.0' 
+pod 'Alamofire'
   # Pods for OneRoom
 
   target 'OneRoomTests' do
