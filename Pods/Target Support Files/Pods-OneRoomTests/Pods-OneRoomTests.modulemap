@@ -1,6 +1,0 @@
-framework module Pods_OneRoomTests {
-  umbrella header "Pods-OneRoomTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
