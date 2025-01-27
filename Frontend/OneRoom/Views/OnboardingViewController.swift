@@ -7,8 +7,10 @@ class OnboardingViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = OnboardingViewModel()
     
+    // MARK: - UI Components
     private let welcomeLabel: UILabel = {
         let label = UILabel()
+        label.text = "Welcome"
         label.font = .systemFont(ofSize: 35, weight: .bold)
         label.textColor = .black
         label.textAlignment = .center
@@ -18,6 +20,7 @@ class OnboardingViewController: UIViewController {
     private let loginLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
+        label.text = "Log in to your account"
         label.font = .systemFont(ofSize: 20, weight: .thin)
         label.textColor = .black
         label.textAlignment = .center
@@ -27,10 +30,10 @@ class OnboardingViewController: UIViewController {
     
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .systemBlue
+        button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 10
         button.titleLabel?.font = .systemFont(ofSize: 20)
         button.isHidden = true
         return button
@@ -38,24 +41,33 @@ class OnboardingViewController: UIViewController {
     
     private let createAccountButton: UIButton = {
         let button = UIButton(type: .system)
+        button.setTitle("Create Account", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 18)
         button.isHidden = true
         return button
     }()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        setupLayout()
+        setupUI()
         bindViewModel()
     }
     
-    private func setupLayout() {
-        view.addSubview(welcomeLabel)
-        view.addSubview(loginLabel)
-        view.addSubview(loginButton)
-        view.addSubview(createAccountButton)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateWelcomeLabel()
+    }
+    
+    // MARK: - UI Setup
+    private func setupUI() {
+        view.backgroundColor = .systemBackground
+        [welcomeLabel, loginLabel, loginButton, createAccountButton].forEach {
+            view.addSubview($0)
+        }
         
-        // 초기 위치
+        // Layout using SnapKit
         welcomeLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -79,14 +91,13 @@ class OnboardingViewController: UIViewController {
         }
     }
     
+    // MARK: - Binding ViewModel
     private func bindViewModel() {
-        // Input 생성
         let input = OnboardingViewModel.Input(
             loginButtonTap: loginButton.rx.tap.asObservable(),
             createAccountButtonTap: createAccountButton.rx.tap.asObservable()
         )
         
-        // ViewModel의 Output과 View 바인딩
         let output = viewModel.transform(input: input)
         
         output.welcomeMessage
@@ -118,20 +129,19 @@ class OnboardingViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    // MARK: - Navigation
     private func navigateToLoginScreen() {
-        print("Navigate to Login Screen")
         let vc = LoginViewController()
-        present(vc,animated: true)
+        present(vc, animated: true)
     }
     
     private func navigateToCreateAccountScreen() {
-        print("Navigate to Create Account Screen")
-        // 실제 네비게이션 로직 추가
+        let vc = CreateAccountViewController()
+        present(vc, animated: true)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    // MARK: - Animations
+    private func animateWelcomeLabel() {
         UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseInOut, animations: {
             self.welcomeLabel.snp.remakeConstraints { make in
                 make.centerX.equalToSuperview()
@@ -142,7 +152,6 @@ class OnboardingViewController: UIViewController {
             self.loginLabel.isHidden = false
             self.loginButton.isHidden = false
             self.createAccountButton.isHidden = false
-            self.view.setNeedsLayout()
         }
     }
 }

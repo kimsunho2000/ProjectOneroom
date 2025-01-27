@@ -4,7 +4,8 @@ import RxSwift
 import RxCocoa
 
 class LoginViewController: UIViewController {
-    
+    private let viewModel = LoginViewViewModel()
+    private let disposeBag = DisposeBag()
     // MARK: - UI Components
     
     private let idLabel: UILabel = {
@@ -59,12 +60,6 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
-    
-    // MARK: - Properties
-    
-    private let viewModel = LoginViewViewModel()
-    private let disposeBag = DisposeBag()
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
