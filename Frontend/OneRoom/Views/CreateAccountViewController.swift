@@ -46,7 +46,7 @@ class CreateAccountViewController: UIViewController {
     private let createAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Create Account", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .lightGray
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.layer.cornerRadius = 10
@@ -116,27 +116,51 @@ class CreateAccountViewController: UIViewController {
         let input = CreateAccountViewModel.Input(
             idText: idTextField.rx.text.orEmpty.asObservable(),
             pwText: pwTextField.rx.text.orEmpty.asObservable(),
-            pwConfirmText: pwConfirmTextField.rx.text.orEmpty.asObservable(),
+            confirmPasswordText: pwConfirmTextField.rx.text.orEmpty.asObservable(),
             createAccountTap: createAccountButton.rx.tap.asObservable(),
             backTap: backButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
         
+        // 버튼 활성화 바인딩
         output.isCreateAccountEnabled
-            .drive(createAccountButton.rx.isEnabled)
+            .drive(createAccountButton.rx.isEnabled) // Driver 사용
             .disposed(by: disposeBag)
         
+        // 버튼 활성화시 색상 바인딩
+        output.isCreateAccountEnabled
+                .drive(onNext: { [weak self] isEnabled in
+                    self?.createAccountButton.backgroundColor = isEnabled ? .systemBlue : .lightGray
+                })
+                .disposed(by: disposeBag)
+
+        
+        // 뒤로 가기 버튼 바인딩
         output.navigateToPrevious
             .subscribe(onNext: { [weak self] in
                 self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
         
+        // 계정 생성 결과 바인딩
         output.createAccountResult
-            .subscribe(onNext: { success in
-                print(success ? "Account created successfully!" : "Failed to create account.")
+            .subscribe(onNext: { user in
+                print("Account created successfully for user: \(user.id)")
+                // self?.navigateToUserProfile(user: user)
             })
             .disposed(by: disposeBag)
+    }
+    
+    /* private func navigateToUserProfile() {
+        let userProfileVC = UserProfileViewController()
+        userProfileVC.modalPresentationStyle = .fullScreen
+        present(userProfileVC, animated: true)
+    } */
+
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Error", message: "Failed to create account. Please try again.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
