@@ -39,20 +39,19 @@ class CreateAccountViewModel {
             // 계정 생성 결과: OneRoomUser 객체 생성 및 반환
             let createAccountResult = input.createAccountTap
                 .withLatestFrom(Observable.combineLatest(input.idText, input.pwText))
-                .map { id, password in
-                    // ID와 비밀번호로만 User 객체 생성
-                    return OneRoomUser(
-                        id: id,
-                        name: "",
-                        displayName: "",
-                        email: "",
-                        phoneNumber: "",
-                        password: password,
-                        createdAt: Date(),
-                        birthDate: Date()
-                    )
-                }
-            
+                .flatMapLatest { id, password -> Observable<OneRoomUser> in
+                            let newUser = OneRoomUser(
+                                id: id,
+                                name: "", // 추가 정보는 추후 뷰에서 입력받아 업데이트
+                                displayName: "",
+                                email: "",
+                                phoneNumber: "",
+                                password: password,
+                                createdAt: Date(),
+                                birthDate: Date()
+                            )
+                            return OneRoomUser.createAccount(user: newUser) // 모델 호출
+                        }
             return Output(
                 isCreateAccountEnabled: isCreateAccountEnabled,
                 navigateToPrevious: navigateToPrevious,

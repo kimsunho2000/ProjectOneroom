@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 struct OneRoomUser: Codable {
     let id: String
@@ -20,11 +21,11 @@ struct OneRoomUser: Codable {
     var birthDate: Date
     var profileImageUrl: String?
     
-    static func createAccount(user: OneRoomUser) -> Observable<Bool> {
+    static func createAccount(user: OneRoomUser) -> Observable<OneRoomUser> {
             // JSON 직렬화
             guard let jsonData = try? JSONEncoder().encode(user) else {
                 print("Failed to encode user to JSON")
-                return Observable.just(false) // JSON 직렬화 실패 시 false 반환
+                return Observable.error(NSError(domain: "EncodingError", code: 400, userInfo: nil)) // JSON 직렬화 실패 시 error발생
             }
             
             // JSON 데이터 출력 (디버깅용)
@@ -32,7 +33,7 @@ struct OneRoomUser: Codable {
             
             // 서버로 전송 (여기서는 네트워크 요청을 생략하고 성공으로 처리)
             // 실제 네트워크 요청이 필요한 경우 URLSession 등을 사용
-            return Observable.just(true)
+        return Observable.just(user)
         }
 
     init(
