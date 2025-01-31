@@ -15,19 +15,9 @@ struct OneRoomUser: Codable {
     var profileImageUrl: String?
 
     static func createAccount(user: OneRoomUser) -> Observable<OneRoomUser> {
-        let url = "http://172.0.0.1:3000/login"
-        AF.request("http://127.0.0.1:3000/temp", method: .get)
-            .responseData { response in
-                switch response.result {
-                case .success(let data):
-                    print("GET 요청 성공, Raw Data: \(data)")
-                    if let string = String(data: data, encoding: .utf8) {
-                        print("응답 문자열: \(string)")
-                    }
-                case .failure(let error):
-                    print("GET 요청 실패: \(error.localizedDescription)")
-                }
-            }
+        
+        let url = "http://127.0.0.1:3000/register"
+
         // JSON 직렬화
         guard let jsonData = try? JSONEncoder().encode(user) else {
             print("Failed to encode user to JSON")

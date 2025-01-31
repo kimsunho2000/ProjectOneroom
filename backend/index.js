@@ -3,6 +3,7 @@ import path from 'path';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import postRoutes from './src/register.js'
 
 const __dirname = path.resolve();
 const app = express();
@@ -25,15 +26,7 @@ nunjucks.configure('src', {
 });
 
 //post.js 라우터 설정
-//app.use('/login', postRoutes);
-
-app.post('/login', (req, res) => {
-    console.log("fuck");
-})
-
-app.get('/temp', (req, res) => {
-    console.log("123");
-})
+app.use('/register', postRoutes);
 
 // 서버 실행
 app.listen(3000, () => {
