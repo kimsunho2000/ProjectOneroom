@@ -136,7 +136,7 @@ class OnboardingViewController: UIViewController {
     }
     
     private func navigateToCreateAccountScreen() {
-        let vc = CreateAccountViewController()
+        let vc = RegisterViewController()
         present(vc, animated: true)
     }
     

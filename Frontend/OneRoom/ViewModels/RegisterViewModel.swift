@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class CreateAccountViewModel {
+class RegisterViewModel {
     
     struct Input {
             let idText: Observable<String>
@@ -50,7 +50,7 @@ class CreateAccountViewModel {
                                 createdAt: Date(),
                                 birthDate: Date()
                             )
-                            return OneRoomUser.createAccount(user: newUser) // 모델 호출
+                    return RegisterManager.shared.createAccount(user: newUser) // 모델 호출
                         }
             return Output(
                 isCreateAccountEnabled: isCreateAccountEnabled,

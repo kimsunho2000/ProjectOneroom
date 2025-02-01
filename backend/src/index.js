@@ -3,7 +3,7 @@ import path from 'path';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import postRoutes from './src/register.js'
+import postRoutes from './register.js'
 
 const __dirname = path.resolve();
 const app = express();

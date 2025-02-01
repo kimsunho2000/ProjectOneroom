@@ -3,9 +3,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class CreateAccountViewController: UIViewController {
+class RegisterViewController: UIViewController {
     private let disposeBag = DisposeBag()
-    private let viewModel = CreateAccountViewModel()
+    private let viewModel = RegisterViewModel()
     
     // MARK: - UI Components
     private let welcomeLabel: UILabel = {
@@ -113,7 +113,7 @@ class CreateAccountViewController: UIViewController {
     
     // MARK: - Rx Binding
     private func bindViewModel() {
-        let input = CreateAccountViewModel.Input(
+        let input = RegisterViewModel.Input(
             idText: idTextField.rx.text.orEmpty.asObservable(),
             pwText: pwTextField.rx.text.orEmpty.asObservable(),
             confirmPasswordText: pwConfirmTextField.rx.text.orEmpty.asObservable(),
