@@ -29,7 +29,7 @@ class RegisterViewModel {
             // 계정 생성 버튼 활성화 조건: ID와 비밀번호가 유효하고, 비밀번호가 일치하는 경우
             let isCreateAccountEnabled = Observable
                 .combineLatest(input.idText, input.pwText, input.confirmPasswordText) { id, password, confirmPassword in
-                    !id.isEmpty && !password.isEmpty && password == confirmPassword
+                    !id.isEmpty && !password.isEmpty && password == confirmPassword && RegexHelper.isIDValid(id) && RegexHelper.isPWValid(password)
                 }
                 .asDriver(onErrorJustReturn: false)
             

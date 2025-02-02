@@ -19,17 +19,17 @@ class RegisterViewController: UIViewController {
     
     private let idTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "ID"
+        textField.placeholder = "ID,Fill in your email address"
         textField.borderStyle = .roundedRect
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont.systemFont(ofSize: 11)
         return textField
     }()
     
     private let pwTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "PW"
+        textField.placeholder = "Password is 8 characters including upper and lower case letters."
         textField.borderStyle = .roundedRect
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont.systemFont(ofSize: 11)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -38,7 +38,7 @@ class RegisterViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "PW Confirm"
         textField.borderStyle = .roundedRect
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont.systemFont(ofSize: 11)
         textField.isSecureTextEntry = true
         return textField
     }()
