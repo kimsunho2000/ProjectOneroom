@@ -97,5 +97,10 @@ iOSInjectionProject/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
-URL.txt
+
+# 환경 변수 파일 제외
+.env
+.env.local
+.env.production
+.env.development
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode
