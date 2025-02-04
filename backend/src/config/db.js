@@ -6,7 +6,6 @@ dotenv.config()
 
 //mongDB연결
 const connectDB = async() => {
-    console.log(process.env.MONGO_URI);
     mongoose
         .connect(process.env.MONGO_URI)
         .then(() => console.log('DB 연결 성공'))

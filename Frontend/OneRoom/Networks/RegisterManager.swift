@@ -19,7 +19,7 @@ class RegisterManager {
     
     func createAccount(user: OneRoomUser) -> Observable<OneRoomUser> {
         
-        let url = "\(baseUrl)/register"
+        let url = "\(baseUrl)/user"
         
         // JSON 직렬화
         guard let jsonData = try? JSONEncoder().encode(user) else {

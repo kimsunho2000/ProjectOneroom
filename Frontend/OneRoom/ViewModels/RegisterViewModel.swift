@@ -44,7 +44,6 @@ class RegisterViewModel {
                                 id: id,
                                 name: "", // 추가 정보는 추후 뷰에서 입력받아 업데이트
                                 displayName: "",
-                                email: "",
                                 phoneNumber: "",
                                 password: password,
                                 createdAt: Date(),

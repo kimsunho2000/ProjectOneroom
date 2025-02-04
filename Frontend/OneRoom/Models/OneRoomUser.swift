@@ -6,7 +6,6 @@ struct OneRoomUser: Codable {
     let id: String
     var name: String
     var displayName: String
-    var email: String
     var phoneNumber: String
     var password: String
     var createdAt: Date
@@ -21,7 +20,6 @@ struct OneRoomUser: Codable {
             "id": id,
             "name": name,
             "displayName": displayName,
-            "email": email,
             "phoneNumber": phoneNumber,
             "password": password,
             "createdAt": formatter.string(from: createdAt),
@@ -35,7 +33,6 @@ struct OneRoomUser: Codable {
         id: String,
         name: String,
         displayName: String,
-        email: String,
         phoneNumber: String,
         password: String,
         createdAt: Date,
@@ -46,7 +43,6 @@ struct OneRoomUser: Codable {
         self.id = id
         self.name = name
         self.displayName = displayName
-        self.email = email
         self.phoneNumber = phoneNumber
         self.password = password
         self.createdAt = createdAt

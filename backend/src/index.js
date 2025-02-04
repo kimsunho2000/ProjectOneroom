@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
-import registerRoutes from './routes/registerRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 import connectDB from './config/db.js';
 
 const __dirname = path.resolve();
@@ -18,8 +18,8 @@ nunjucks.configure('src', {
     express: app,
 });
 
-//post.js 라우터 설정
-app.use('/register', registerRoutes);
+// 라우터 설정
+app.use('/user', userRoutes);
 
 // DB 실행
 connectDB()
