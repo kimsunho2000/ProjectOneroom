@@ -3,7 +3,8 @@ import path from 'path';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes.js'
-import connectDB from './config/db.js';
+import loginRoutes from './routes/loginRoutes.js'
+import connectDB from './config/db.js'
 
 const __dirname = path.resolve();
 const app = express();
@@ -20,6 +21,7 @@ nunjucks.configure('src', {
 
 // 라우터 설정
 app.use('/user', userRoutes);
+app.use('/auth', loginRoutes);
 
 // DB 실행
 connectDB()

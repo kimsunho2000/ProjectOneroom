@@ -29,7 +29,7 @@ export const registerUser = async (req, res) => {
         await newUser.save();
 
         res.status(201).json({
-            message: "✅ 회원가입 성공!",
+            message: "회원가입 성공!",
             user: newUser
         });
     }

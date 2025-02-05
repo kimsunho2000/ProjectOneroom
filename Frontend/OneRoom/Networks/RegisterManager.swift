@@ -49,8 +49,18 @@ class RegisterManager {
                         observer.onNext(user) // 성공 응답 반환
                         observer.onCompleted()
                     case .failure(let error):
-                        print(" Error: \(error.localizedDescription)")
-                        observer.onError(error) // 네트워크 요청 실패 시 에러 반환
+                        // 상태 코드 400 등 실패 응답 시, 응답 데이터가 있다면 서버 에러 메시지 파싱 시도
+                        if let data = response.data {
+                            do {
+                                let serverError = try JSONDecoder().decode(ServerError.self, from: data)
+                                observer.onError(serverError)
+                            } catch {
+                                print("Error decoding server error: \(error.localizedDescription)")
+                                observer.onError(error)
+                            }
+                        } else {
+                            observer.onError(error)
+                        }
                     }
                 }
             

@@ -19,7 +19,7 @@ class RegisterViewController: UIViewController {
     
     private let idTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "ID,Fill in your email address"
+        textField.placeholder = "ID, Fill in your email address"
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 11)
         return textField
@@ -123,20 +123,19 @@ class RegisterViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
-        // 버튼 활성화 바인딩
+        // 버튼 활성화 상태 바인딩 (Driver 사용)
         output.isCreateAccountEnabled
-            .drive(createAccountButton.rx.isEnabled) // Driver 사용
+            .drive(createAccountButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        // 버튼 활성화시 색상 바인딩
+        // 버튼 활성화 시 색상 변경
         output.isCreateAccountEnabled
-                .drive(onNext: { [weak self] isEnabled in
-                    self?.createAccountButton.backgroundColor = isEnabled ? .systemBlue : .lightGray
-                })
-                .disposed(by: disposeBag)
-
+            .drive(onNext: { [weak self] isEnabled in
+                self?.createAccountButton.backgroundColor = isEnabled ? .systemBlue : .lightGray
+            })
+            .disposed(by: disposeBag)
         
-        // 뒤로 가기 버튼 바인딩
+        // 뒤로 가기 버튼 이벤트 바인딩
         output.navigateToPrevious
             .subscribe(onNext: { [weak self] in
                 self?.dismiss(animated: true)
@@ -145,22 +144,41 @@ class RegisterViewController: UIViewController {
         
         // 계정 생성 결과 바인딩
         output.createAccountResult
-            .subscribe(onNext: { user in
+            .drive(onNext: { [weak self] user in
+                guard let self = self else { return }
                 print("Account created successfully for user: \(user.id)")
-                // self?.navigateToUserProfile(user: user)
+                // 계정 생성 성공 시 다음 화면으로 이동하거나 처리할 로직 추가
+                // self.navigateToUserProfile(user: user)
+            })
+            .disposed(by: disposeBag)
+        
+        // 에러 메시지 구독 후 Alert 팝업 표시
+        output.errorMessage
+            .drive(onNext: { [weak self] message in
+                guard let self = self else { return }
+                if let message = message, !message.isEmpty {
+                    self.showErrorAlert(with: message)
+                }
             })
             .disposed(by: disposeBag)
     }
     
-    /* private func navigateToUserProfile() {
+    // MARK: - Helper Methods
+    
+    private func showErrorAlert(with message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
+        }
+    }
+    
+    /*
+    private func navigateToUserProfile(user: OneRoomUser) {
         let userProfileVC = UserProfileViewController()
         userProfileVC.modalPresentationStyle = .fullScreen
         present(userProfileVC, animated: true)
-    } */
-
-    private func showErrorAlert() {
-        let alert = UIAlertController(title: "Error", message: "Failed to create account. Please try again.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
     }
+    */
 }
