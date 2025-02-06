@@ -1,4 +1,7 @@
 import User from "../models/oneroomUser.js";
+import error from "passport/lib/errors/authenticationerror.js";
+import bcrypt from "bcryptjs";
+
 // /user post요청 처리
 export const registerUser = async (req, res) => {
     try {
@@ -12,16 +15,16 @@ export const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: "이미 존재하는 이메일입니다." });
         }
-        else {
-            console.log("가입 가능")
-        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log("가입 가능")
+
         //user 객체 생성
         const newUser = new User({
             id,
             name,
             displayName,
             phoneNumber,
-            password,
+            hashedPassword,
             createdAt: createdAt ? new Date(createdAt) : new Date(),
             birthDate: birthDate ? new Date(birthDate) : null
         });
