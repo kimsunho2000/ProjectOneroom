@@ -24,7 +24,7 @@ export const registerUser = async (req, res) => {
             name,
             displayName,
             phoneNumber,
-            hashedPassword,
+            password: hashedPassword,
             createdAt: createdAt ? new Date(createdAt) : new Date(),
             birthDate: birthDate ? new Date(birthDate) : null
         });

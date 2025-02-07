@@ -39,6 +39,7 @@ class LoginViewController: UIViewController {
         textField.font = .systemFont(ofSize: 16)
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .whileEditing
+        textField.isSecureTextEntry = true
         return textField
     }()
     

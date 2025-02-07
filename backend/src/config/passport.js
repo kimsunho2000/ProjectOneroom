@@ -5,10 +5,10 @@ import User from "../models/oneroomUser.js"
 
 // 로그인 설정(Local db)
 passport.use(
-    new LocalStrategy({ usernameField: "ID"}, async (email, password, done) => {
-            try {
-                const user = await  User.findOne({ ID });
-                if (! user) return done(null, false, { message: "이메일이 존재하지 않습니다."});
+    new LocalStrategy({ usernameField: "id"}, async (id, password, done) => {
+        try {
+                const user = await  User.findOne({ id  });
+                if (!user) return done(null, false, { message: "이메일이 존재하지 않습니다."});
 
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (!isMatch) return done(null, false, { message: "비밀번호가 틀렸습니다."});

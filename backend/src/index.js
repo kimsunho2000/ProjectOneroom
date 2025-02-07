@@ -3,7 +3,7 @@ import session from 'express-session'
 import path from 'path';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
-import passport from ' passport'
+import passport from './config/passport.js'
 import userRoutes from './routes/userRoutes.js'
 import loginRoutes from './routes/loginRoutes.js'
 import connectDB from './config/db.js'
