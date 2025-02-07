@@ -47,7 +47,7 @@ class LoginViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Login", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .lightGray
         button.layer.cornerRadius = 10
         button.isEnabled = false // 초기 상태는 비활성화
         return button
@@ -144,11 +144,14 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.loginButtonEnabled
-            .drive(loginButton.rx.isEnabled)
+            .drive(onNext: { [weak self] isEnabled in
+                self?.loginButton.backgroundColor = isEnabled ? .systemBlue : .lightGray
+                self?.loginButton.isEnabled = isEnabled
+            })
             .disposed(by: disposeBag)
         
         output.navigateToLogin
-            .subscribe(onNext: {
+            .drive(onNext: {
                 print("Navigate to login logic")
                 // Add navigation logic here
             })
