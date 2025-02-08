@@ -7,7 +7,7 @@ import User from "../models/oneroomUser.js"
 passport.use(
     new LocalStrategy({ usernameField: "id"}, async (id, password, done) => {
         try {
-                const user = await  User.findOne({ id  });
+                const user = await  User.findOne({ id });
                 if (!user) return done(null, false, { message: "이메일이 존재하지 않습니다."});
 
                 const isMatch = await bcrypt.compare(password, user.password);

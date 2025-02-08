@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 // /user post요청 처리
 export const registerUser = async (req, res) => {
     try {
-        const { id, name, displayName, phoneNumber, password, createdAt, bio, birthDate, profileImageURL } = req.body;
+        const { id, name, displayName, phoneNumber, password, createdAt, bio, birthDate, profileImageUrl } = req.body;
         // ID,PW 입력 확인
         if ( !id || !password ) {
             return res.status(400).json({ message: "ID 혹은 PW 누락" });
@@ -26,7 +26,9 @@ export const registerUser = async (req, res) => {
             phoneNumber,
             password: hashedPassword,
             createdAt: createdAt ? new Date(createdAt) : new Date(),
-            birthDate: birthDate ? new Date(birthDate) : null
+            bio,
+            birthDate: birthDate ? new Date(birthDate) : new Date(),
+            profileImageUrl
         });
 
         await newUser.save();

@@ -8,7 +8,9 @@ const userSchema = new mongoose.Schema({
     phoneNumber: { type: String, default: "" },
     password: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-    birthDate: { type: Date }
+    bio: { type: String, default: "" },
+    birthDate: { type: Date },
+    profileImageUrl: { type: String, default: "" }
 });
 
 const User = mongoose.model('User', userSchema);

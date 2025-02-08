@@ -15,3 +15,14 @@ struct ServerError: Error, Decodable {
         return message
     }
 }
+// 가입시 서버 응답 모델
+struct RegisterResponse: Codable {
+    let message: String
+    let user: OneRoomUser
+}
+
+// 서버 응답 모델 추가
+struct LoginResponse: Codable {
+    let message: String
+    let user: OneRoomUser
+}

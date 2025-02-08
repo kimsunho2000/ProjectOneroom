@@ -12,16 +12,29 @@ import Alamofire
 class RegisterManager {
     
     static let shared = RegisterManager()
-    private init(){}
+    private init() {}
     
     private let baseUrl = "http://127.0.0.1:3000"
     
+    // JSONDecoder에 DateFormatter를 사용하여 날짜 문자열 디코딩
+    let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        
+        // 서버에서 오는 날짜 문자열 처리
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        return decoder
+    }()
     
     func createAccount(user: OneRoomUser) -> Observable<OneRoomUser> {
         
         let url = "\(baseUrl)/user"
         
-        // JSON 직렬화
+        // 사용자 객체를 JSON으로 인코딩
         guard let jsonData = try? JSONEncoder().encode(user) else {
             print("Failed to encode user to JSON")
             return Observable.error(NSError(domain: "EncodingError", code: 400, userInfo: nil))
@@ -43,9 +56,10 @@ class RegisterManager {
                                      encoding: JSONEncoding.default,
                                      headers: headers)
                 .validate(statusCode: 200..<300) // 성공적인 상태 코드만 허용
-                .responseDecodable(of: OneRoomUser.self) { response in
+                .responseDecodable(of: RegisterResponse.self, decoder: self.decoder) { response in
                     switch response.result {
-                    case .success(let user):
+                    case .success(let registerResponse):
+                        let user = registerResponse.user  // `user` 필드에서 OneRoomUser 추출
                         observer.onNext(user) // 성공 응답 반환
                         observer.onCompleted()
                     case .failure(let error):

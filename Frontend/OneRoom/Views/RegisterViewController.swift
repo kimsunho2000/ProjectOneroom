@@ -145,7 +145,7 @@ class RegisterViewController: UIViewController {
         // 계정 생성 결과 바인딩
         output.createAccountResult
             .drive(onNext: { [weak self] user in
-                guard let self = self else { return }
+                guard self != nil else { return }
                 print("Account created successfully for user: \(user.id)")
                 // 계정 생성 성공 시 다음 화면으로 이동하거나 처리할 로직 추가
                 // self.navigateToUserProfile(user: user)

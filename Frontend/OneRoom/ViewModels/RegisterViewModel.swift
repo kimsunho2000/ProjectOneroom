@@ -63,7 +63,9 @@ class RegisterViewModel {
                     phoneNumber: "",
                     password: pw,
                     createdAt: Date(),
-                    birthDate: Date()
+                    bio: "",
+                    birthDate: Date(),
+                    profileImageUrl: ""
                 )
                 return RegisterManager.shared.createAccount(user: newUser)
                     .materialize()

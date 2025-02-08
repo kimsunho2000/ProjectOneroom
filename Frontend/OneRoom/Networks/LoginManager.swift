@@ -14,7 +14,20 @@ class LoginManager {
     static let shared = LoginManager()
     private init() {}
     
-    private let baseURL = "http://127.0.0.1:3000" // 로컬호스트 주소 수정
+    private let baseURL = "http://127.0.0.1:3000"
+    // JSONDecoder에 DateFormatter를 사용하여 날짜 문자열 디코딩
+    let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        
+        // 서버에서 오는 날짜 문자열 처리
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        return decoder
+    }()
     
     func login(loginRequest: LoginRequest) -> Observable<Bool> {
         
@@ -41,7 +54,7 @@ class LoginManager {
                                      encoding: JSONEncoding.default,
                                      headers: headers)
                 .validate(statusCode: 200..<300)
-                .responseDecodable(of: LoginResponse.self) { response in
+                .responseDecodable(of: LoginResponse.self, decoder: self.decoder) { response in
                     switch response.result {
                     case .success:
                         observer.onNext(true) // 로그인 성공 시 true 반환
@@ -50,8 +63,8 @@ class LoginManager {
                         // 서버 에러 메시지 파싱 시도
                         if let data = response.data {
                             do {
+                                print(error)
                                 let serverError = try JSONDecoder().decode(ServerError.self, from: data)
-                                print("Server Error: \(serverError.message)")
                                 observer.onError(NSError(domain: "ServerError", code: response.response?.statusCode ?? 500, userInfo: [NSLocalizedDescriptionKey: serverError.message]))
                             } catch {
                                 print("Error decoding server error: \(error.localizedDescription)")
@@ -68,8 +81,4 @@ class LoginManager {
             }
         }
     }
-}
-// 서버 응답 모델 추가
-struct LoginResponse: Codable {
-    let success: Bool
 }
