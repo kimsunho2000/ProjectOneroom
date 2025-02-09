@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 
 class LoginViewController: UIViewController {
-    private let viewModel = LoginViewViewModel()
+    private let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     // MARK: - UI Components
     
@@ -118,7 +118,7 @@ class LoginViewController: UIViewController {
     // MARK: - Rx Binding
     
     private func bindViewModel() {
-        let input = LoginViewViewModel.Input(
+        let input = LoginViewModel.Input(
             idText: idTextField.rx.text.orEmpty.asObservable(),
             pwText: pwTextField.rx.text.orEmpty.asObservable(),
             loginButtonTap: loginButton.rx.tap.asObservable(),
@@ -153,7 +153,7 @@ class LoginViewController: UIViewController {
         output.navigateToLogin
             .drive(onNext: {
                 print("Navigate to login logic")
-                // Add navigation logic here
+                
             })
             .disposed(by: disposeBag)
         

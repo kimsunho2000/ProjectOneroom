@@ -1,7 +1,7 @@
 import RxSwift
 import RxCocoa
 
-class LoginViewViewModel {
+class LoginViewModel {
     
     struct Input {
         let idText: Observable<String>
