@@ -132,12 +132,12 @@ class OnboardingViewController: UIViewController {
     // MARK: - Navigation
     private func navigateToLoginScreen() {
         let vc = LoginViewController()
-        present(vc, animated: true)
+        Utility.shared.replaceRootViewController(with: vc)
     }
     
     private func navigateToCreateAccountScreen() {
         let vc = RegisterViewController()
-        present(vc, animated: true)
+        Utility.shared.replaceRootViewController(with: vc)
     }
     
     // MARK: - Animations
@@ -154,4 +154,13 @@ class OnboardingViewController: UIViewController {
             self.createAccountButton.isHidden = false
         }
     }
+//    //화면 전환 메소드(자연스러운 화면 전환)
+//    public func replaceRootViewController(with newViewController: UIViewController) {
+//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//              let window = windowScene.windows.first else { return }
+//        
+//        window.rootViewController = newViewController
+//        window.makeKeyAndVisible()
+//        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+//    }
 }

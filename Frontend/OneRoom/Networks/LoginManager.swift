@@ -29,7 +29,7 @@ class LoginManager {
         return decoder
     }()
     
-    func login(loginRequest: LoginRequest) -> Observable<Bool> {
+    func login(loginRequest: LoginRequest) -> Observable<LoginResponse> {
         
         let url = "\(baseURL)/auth/login"
         // JSON 직렬화
@@ -56,8 +56,8 @@ class LoginManager {
                 .validate(statusCode: 200..<300)
                 .responseDecodable(of: LoginResponse.self, decoder: self.decoder) { response in
                     switch response.result {
-                    case .success:
-                        observer.onNext(true) // 로그인 성공 시 true 반환
+                    case .success(let loginResponse):
+                        observer.onNext(loginResponse) // 로그인 성공 시 true 반환
                         observer.onCompleted()
                     case .failure(let error):
                         // 서버 에러 메시지 파싱 시도

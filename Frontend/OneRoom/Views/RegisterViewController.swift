@@ -138,7 +138,8 @@ class RegisterViewController: UIViewController {
         // 뒤로 가기 버튼 이벤트 바인딩
         output.navigateToPrevious
             .subscribe(onNext: { [weak self] in
-                self?.dismiss(animated: true)
+                let vc = OnboardingViewController()
+                Utility.shared.replaceRootViewController(with: vc)
             })
             .disposed(by: disposeBag)
         

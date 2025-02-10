@@ -151,9 +151,18 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.navigateToLogin
-            .drive(onNext: {
-                print("Navigate to login logic")
+            .drive(onNext: { [weak self] isProfileComplete in
+                guard let self = self else { return }
                 
+                if isProfileComplete {
+                    // Main 화면으로 이동
+                    let mainVC = MainViewController()
+                    self.navigationController?.pushViewController(mainVC, animated: true)
+                } else {
+                    // Profile 작성 화면으로 이동
+                    let profileVC = ProfileViewController()
+                    self.navigationController?.pushViewController(profileVC, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         

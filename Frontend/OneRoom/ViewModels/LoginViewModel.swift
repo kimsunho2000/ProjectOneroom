@@ -16,9 +16,8 @@ class LoginViewModel {
         let idTextField: Driver<String>
         let pwTextField: Driver<String>
         let loginButtonEnabled: Driver<Bool>
-        let navigateToLogin: Driver<Void>
+        let navigateToLogin: Driver<Bool>
         let navigateToFindAccount: Observable<Void>
-        let loginResult: Driver<Bool>
         let errorMessage: Driver<String?>
     }
     
@@ -38,7 +37,7 @@ class LoginViewModel {
         // 로그인 요청 이벤트
         let loginEvent = input.loginButtonTap
             .withLatestFrom(Observable.combineLatest(input.idText, input.pwText))
-            .flatMapLatest { id, pw -> Observable<Event<Bool>> in
+            .flatMapLatest { id, pw -> Observable<Event<LoginResponse>> in
                 let loginRequest = LoginRequest(id: id, pw: pw)
                 return LoginManager.shared.login(loginRequest: loginRequest)
                     .materialize()
@@ -47,17 +46,16 @@ class LoginViewModel {
         
         // 로그인 성공 여부
         let loginResult = loginEvent
-            .compactMap { event -> Bool? in
-                if case .next(let success) = event {
-                    return success
+            .compactMap { event -> LoginResponse? in
+                if case .next(let OneroomUser) = event {
+                    return OneroomUser
                 }
                 return nil
             }
             .asDriver(onErrorDriveWith: Driver.empty())
         
         let navigateToLogin = loginResult
-            .filter { $0 } // 로그인 성공한 경우만 실행
-            .map { _ in () } // Void 타입으로 변환
+            .map { (($0.user.bio?.isEmpty) == nil) }
             .asDriver(onErrorDriveWith: .empty())
         
         let errorMessage = loginEvent
@@ -78,7 +76,6 @@ class LoginViewModel {
             loginButtonEnabled: loginButtonEnabled,
             navigateToLogin: navigateToLogin,
             navigateToFindAccount: input.findAccountButtonTap,
-            loginResult: loginResult,
             errorMessage: errorMessage
         )
     }
