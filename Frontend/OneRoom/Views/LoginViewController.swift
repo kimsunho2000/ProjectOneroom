@@ -61,6 +61,14 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
+    
+    private let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -75,7 +83,7 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .white
         
         // Add subviews
-        [idLabel, pwLabel, idTextField, pwTextField, loginButton, findAccountButton].forEach {
+        [idLabel, pwLabel, idTextField, pwTextField, loginButton, findAccountButton, backButton].forEach {
             view.addSubview($0)
         }
         
@@ -113,6 +121,11 @@ class LoginViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(50)
         }
+        
+        backButton.snp.makeConstraints { make in
+                make.top.equalTo(findAccountButton.snp.bottom).offset(20)
+                make.centerX.equalToSuperview()
+            }
     }
     
     // MARK: - Rx Binding
@@ -122,7 +135,8 @@ class LoginViewController: UIViewController {
             idText: idTextField.rx.text.orEmpty.asObservable(),
             pwText: pwTextField.rx.text.orEmpty.asObservable(),
             loginButtonTap: loginButton.rx.tap.asObservable(),
-            findAccountButtonTap: findAccountButton.rx.tap.asObservable()
+            findAccountButtonTap: findAccountButton.rx.tap.asObservable(),
+            backTap: backButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -165,6 +179,12 @@ class LoginViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        output.navigateToBack.subscribe(onNext: { [weak self] in
+            let vc = OnboardingViewController()
+            Utility.shared.replaceRootViewController(with: vc)
+        })
+        .disposed(by: disposeBag)
         
         output.navigateToFindAccount
             .subscribe(onNext: {

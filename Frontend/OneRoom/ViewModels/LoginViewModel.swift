@@ -8,6 +8,7 @@ class LoginViewModel {
         let pwText: Observable<String>
         let loginButtonTap: Observable<Void>
         let findAccountButtonTap: Observable<Void>
+        let backTap: Observable<Void>
     }
     
     struct Output {
@@ -19,8 +20,9 @@ class LoginViewModel {
         let navigateToLogin: Driver<Bool>
         let navigateToFindAccount: Observable<Void>
         let errorMessage: Driver<String?>
+        let navigateToBack: Observable<Void>
     }
-    
+
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -68,6 +70,8 @@ class LoginViewModel {
             .startWith(nil)
             .asDriver(onErrorDriveWith: Driver.empty())
         
+        let navigateToBack = input.backTap
+    
         return Output(
             idLabel: idLabel,
             pwLabel: pwLabel,
@@ -76,7 +80,8 @@ class LoginViewModel {
             loginButtonEnabled: loginButtonEnabled,
             navigateToLogin: navigateToLogin,
             navigateToFindAccount: input.findAccountButtonTap,
-            errorMessage: errorMessage
+            errorMessage: errorMessage,
+            navigateToBack: navigateToBack
         )
     }
 }
