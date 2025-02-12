@@ -22,7 +22,7 @@ passport.use(
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
-// 세션 역질렬화(세션 복원)
+// 세션 역직렬화(세션 복원)
 passport.deserializeUser( (user, done) => {
    try {
        const user =  User.findById(id);

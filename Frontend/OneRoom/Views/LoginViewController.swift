@@ -6,6 +6,7 @@ import RxCocoa
 class LoginViewController: UIViewController {
     private let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
+    
     // MARK: - UI Components
     
     private let idLabel: UILabel = {
@@ -167,7 +168,6 @@ class LoginViewController: UIViewController {
         output.navigateToLogin
             .drive(onNext: { [weak self] isProfileComplete in
                 guard let self = self else { return }
-                
                 if isProfileComplete {
                     // Main 화면으로 이동
                     let mainVC = MainViewController()
@@ -175,7 +175,8 @@ class LoginViewController: UIViewController {
                 } else {
                     // Profile 작성 화면으로 이동
                     let profileVC = ProfileViewController()
-                    self.navigationController?.pushViewController(profileVC, animated: true)
+                    Utility.shared.replaceRootViewController(with: profileVC)
+                    //self.navigationController?.pushViewController(profileVC, animated: true)
                 }
             })
             .disposed(by: disposeBag)
