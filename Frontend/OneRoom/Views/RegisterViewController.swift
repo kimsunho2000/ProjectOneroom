@@ -148,8 +148,8 @@ class RegisterViewController: UIViewController {
             .drive(onNext: { [weak self] user in
                 guard self != nil else { return }
                 print("Account created successfully for user: \(user.id)")
-                // 계정 생성 성공 시 다음 화면으로 이동하거나 처리할 로직 추가
-                // self.navigateToUserProfile(user: user)
+                let vc = LoginViewController()
+                Utility.shared.replaceRootViewController(with: vc)
             })
             .disposed(by: disposeBag)
         

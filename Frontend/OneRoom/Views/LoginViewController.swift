@@ -91,7 +91,7 @@ class LoginViewController: UIViewController {
         // Layout using SnapKit
         idLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(40)
-            make.leading.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
         }
         
         idTextField.snp.makeConstraints { make in
@@ -102,7 +102,7 @@ class LoginViewController: UIViewController {
         
         pwLabel.snp.makeConstraints { make in
             make.top.equalTo(idTextField.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
         }
         
         pwTextField.snp.makeConstraints { make in
