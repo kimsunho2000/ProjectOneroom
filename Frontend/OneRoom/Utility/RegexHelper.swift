@@ -38,4 +38,20 @@ class RegexHelper {
         return PW.range(of: pattern, options: .regularExpression) != nil
     }
     
+    // 실명 검사
+    static func isNameValid(_ name: String) -> Bool {
+        let pattern = #"^[가-힣]{3}$"#  // 한글 세글자
+        return name.range(of: pattern, options: .regularExpression) != nil
+    }
+     
+    // 닉네임 검사
+    static func isNickNameValid(_ nickName: String) -> Bool {
+        return nickName.count <= 8 && !nickName.isEmpty // 8글자 이내로 설정
+    }
+        
+    // 핸드폰 번호 검사
+    static func isPhoneNumberValid(_ phoneNumber: String) -> Bool {
+        let pattern = #"^\d{3}-\d{4}-\d{4}$"# // 번호 형식은 xxx-xxxx-xxxx
+        return phoneNumber.range(of: pattern, options: .regularExpression) != nil
+    }
 }

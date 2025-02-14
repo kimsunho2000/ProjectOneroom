@@ -193,5 +193,24 @@ class LoginViewController: UIViewController {
                 // Add navigation logic here
             })
             .disposed(by: disposeBag)
+        
+        output.errorMessage.drive(onNext: { [weak self] message in
+            guard let self = self else { return }
+            if let message = message, !message.isEmpty {
+                self.showErrorAlert(with: message)
+            }
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func showErrorAlert(with message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(okAction)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
+        }
     }
 }

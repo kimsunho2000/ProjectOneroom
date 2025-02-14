@@ -15,16 +15,18 @@ struct OneRoomUser: Codable {
     
     /// JSON 변환을 위한 딕셔너리 프로퍼티
     var dictionary: [String: Any] {
-        let formatter = ISO8601DateFormatter()
+        let ISOFormatter = ISO8601DateFormatter()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return [
             "id": id,
             "name": name,
             "displayName": displayName,
             "phoneNumber": phoneNumber,
             "password": password,
-            "createdAt": formatter.string(from: createdAt),
+            "createdAt": ISOFormatter.string(from: createdAt),
             "bio": bio ?? "",
-            "birthDate": formatter.string(from: birthDate),
+            "birthDate": dateFormatter.string(from: birthDate),
             "profileImageUrl": profileImageUrl ?? ""
         ]
     }
