@@ -141,13 +141,15 @@ class ProfileViewController: UIViewController {
 
         let toolbar = createToolbar(selector: #selector(dismissDatePicker))
         birthTextField.inputAccessoryView = toolbar
-        
-        datePicker.rx.date
-            .map { DateFormatter.localizedString(from: $0, dateStyle: .medium, timeStyle: .none) }
-            .bind(to: birthTextField.rx.text)
-            .disposed(by: disposeBag)
+        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
     }
     
+    @objc private func dateChanged() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        birthTextField.text = dateFormatter.string(from: datePicker.date) 
+    }
+
     @objc private func dismissDatePicker() {
         view.endEditing(true)
     }
@@ -231,9 +233,13 @@ class ProfileViewController: UIViewController {
             .drive(bioTextField.rx.text)
             .disposed(by: disposeBag)
         
-        output.birthDate
-            .drive(birthTextField.rx.text)
-            .disposed(by: disposeBag)
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+
+            output.birthDate
+                .map { dateFormatter.string(from: $0) }
+                .drive(birthTextField.rx.text)
+                .disposed(by: disposeBag)
         
         output.errorMessage
             .drive(onNext: { [weak self] message in

@@ -6,6 +6,7 @@ const router = express.Router();
 
 // POST /user → 회원가입 요청 처리
 router.post('/', registerUser);
-router.post('/profile', userProfile);
+// PATCH /user/profile -> 프로필 추가 및 수정
+router.patch('/profile', userProfile);
 
 export default router;

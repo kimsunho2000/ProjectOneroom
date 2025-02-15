@@ -181,7 +181,7 @@ class LoginViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.navigateToBack.subscribe(onNext: { [weak self] in
+        output.navigateToBack.subscribe(onNext: {
             let vc = OnboardingViewController()
             Utility.shared.replaceRootViewController(with: vc)
         })

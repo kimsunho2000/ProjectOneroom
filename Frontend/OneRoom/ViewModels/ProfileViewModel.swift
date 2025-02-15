@@ -23,7 +23,7 @@ class ProfileViewModel {
         let isProfileValid: Driver<Bool>
         let genderOptions: Driver<[String]> // "Male", "Female" 선택 옵션
         let selectedGender: Driver<String> // 현재 선택된 성별
-        let birthDate: Driver<String> // 현재 선택된 생년월일
+        let birthDate: Driver<Date> // 현재 선택된 생년월일
         let completeButtonEnabled: Driver<Bool>
         let errorMessage: Driver<String?> // 에러 메시지 전달
     }
@@ -41,48 +41,62 @@ class ProfileViewModel {
             
         let completeButtonEnabled = isProfileValid
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+
         let errorMessage = PublishRelay<String?>()
+        
+        let birthDateObservable: Observable<Date> = input.birthDate
+            .compactMap { dateFormatter.date(from: $0) }
+            .catchAndReturn(Date()) // 변환 실패 시 기본값을 현재 날짜로 설정
+            .asObservable()
         
         let profileInputEvent = input.completeButtonTap
             .withLatestFrom(Observable.combineLatest(
-                input.name, input.displayName, input.phoneNum, input.gender, input.birthDate
+                input.name, input.displayName, input.phoneNum, input.gender, birthDateObservable
             ))
-            .flatMapLatest { name, displayName, phoneNum, gender, birthDate  -> Observable<String?> in
-                // 검증
+            .flatMapLatest { name, displayName, phoneNum, gender, birthDate -> Observable<Profile> in
                 if !RegexHelper.isNameValid(name) {
-                    return Observable.just(ValidationError.invalidName.errorDescription)
+                    return Observable.error(ValidationError.invalidName)
                 }
-                
+
                 if !RegexHelper.isNickNameValid(displayName) {
-                    return Observable.just(ValidationError.invalidNickName.errorDescription)
+                    return Observable.error(ValidationError.invalidNickName)
                 }
-                
+
                 if !RegexHelper.isPhoneNumberValid(phoneNum) {
-                    return Observable.just(ValidationError.invalidPhoneNumber.errorDescription)
+                    return Observable.error(ValidationError.invalidPhoneNumber)
                 }
-                
+
                 if gender != "Male" && gender != "Female" {
-                    return Observable.just(ValidationError.invalidGender.errorDescription)
+                    return Observable.error(ValidationError.invalidGender)
                 }
-                
-                if birthDate.isEmpty {
-                    return Observable.just(ValidationError.invalidBirthDate.errorDescription)
-                }
-                
-                // 모든 검증 통과 시 오류 메시지를 nil로 설정
-                return Observable.just(nil)
+
+                let profile = Profile(
+                    name: name,
+                    displayName: displayName,
+                    phoneNumber: phoneNum,
+                    bio: gender,
+                    birthDate: birthDate,
+                    profileImageUrl: ""
+                )
+
+                return ProfileManager.shared.patchProfile(profile: profile)
             }
-            .do(onNext: { message in
-                errorMessage.accept(message)
+            .do(onError: { error in
+                if let validationError = error as? ValidationError {
+                    errorMessage.accept(validationError.errorDescription) // 에러 메시지 전달
+                }
             })
-        
+
         profileInputEvent.subscribe().disposed(by: disposeBag)
 
         return Output(
             isProfileValid: isProfileValid,
             genderOptions: genderOptions.asDriver(onErrorJustReturn: []),
             selectedGender: input.gender.asDriver(onErrorJustReturn: "Male"),
-            birthDate: input.birthDate.asDriver(onErrorJustReturn: ""),
+            birthDate: birthDateObservable.asDriver(onErrorJustReturn: Date()),
             completeButtonEnabled: completeButtonEnabled,
             errorMessage: errorMessage.asDriver(onErrorJustReturn: nil)
         )

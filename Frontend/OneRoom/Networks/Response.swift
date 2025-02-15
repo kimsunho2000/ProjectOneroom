@@ -26,3 +26,9 @@ struct LoginResponse: Codable {
     let message: String
     let user: OneRoomUser
 }
+
+// 프로필 수정, 추가시 응답 모델
+struct ProfileResponse: Codable {
+    let message: String
+    let profile: Profile
+}
