@@ -20,12 +20,12 @@ passport.use(
 );
 // 세션 직렬화(세젼 저장)
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user._id);
 });
 // 세션 역직렬화(세션 복원)
-passport.deserializeUser( (id, done) => {
+passport.deserializeUser( (_id, done) => {
    try {
-       const user = User.findById(id);
+       const user = User.findById(_id);
        done(null, user);
    } catch (err) {
        done(err);

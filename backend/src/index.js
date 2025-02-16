@@ -23,6 +23,7 @@ nunjucks.configure('src', {
     watch: true,
     express: app,
 });
+
 // 세션 설정
 app.use(
     session({
