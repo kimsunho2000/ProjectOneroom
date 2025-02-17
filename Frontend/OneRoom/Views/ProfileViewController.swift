@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let viewModel = ProfileViewModel()
     private let disposeBag = DisposeBag()
     
@@ -32,9 +32,11 @@ class ProfileViewController: UIViewController {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 40
-        imageView.image = UIImage(systemName: "person")
+        imageView.layer.cornerRadius = 75
+        imageView.image = UIImage(systemName: "person.fill")
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .white
+        imageView.isUserInteractionEnabled = true // 터치 이벤트 활성화
         return imageView
     }()
     
@@ -191,7 +193,29 @@ class ProfileViewController: UIViewController {
         return textField
     }
     
-    
+    // MARK: - UIImagePickerController 관련 처리 (ViewModel에서 분리)
+       private func presentImagePicker() {
+           let picker = UIImagePickerController()
+           picker.delegate = self
+           picker.sourceType = .photoLibrary
+           picker.allowsEditing = true
+           present(picker, animated: true)
+       }
+       
+       // 사용자가 이미지를 선택했을 때
+       func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+           picker.dismiss(animated: true)
+           if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+               viewModel.updateSelectedImage(selectedImage) // ViewModel에 전달
+           }
+           else {
+               viewModel.updateSelectedImage(nil)
+           }
+       }
+       
+       func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+           picker.dismiss(animated: true)
+       }
     
     // MARK: - Helper Methods
     
@@ -204,16 +228,22 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    
     // MARK: - ViewModel Binding
     
     private func bindViewModel() {
+        
+        // 탭 제스터 추가
+        let tapGesture = UITapGestureRecognizer()
+        profileAvatarImageView.addGestureRecognizer(tapGesture)
+        let avatarImageTapObservable = tapGesture.rx.event.map { _ in }
+        
         let input = ProfileViewModel.Input(
             name: nameTextField.rx.text.orEmpty.asObservable(),
             displayName: displayNameTextField.rx.text.orEmpty.asObservable(),
             phoneNum: phoneNumTextField.rx.text.orEmpty.asObservable(),
             gender: bioTextField.rx.text.orEmpty.asObservable(),
             birthDate: birthTextField.rx.text.orEmpty.asObservable(),
+            avatarImageTap: avatarImageTapObservable,
             completeButtonTap: completeButton.rx.tap.asObservable()
         )
         
@@ -234,12 +264,12 @@ class ProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-
-            output.birthDate
-                .map { dateFormatter.string(from: $0) }
-                .drive(birthTextField.rx.text)
-                .disposed(by: disposeBag)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        output.birthDate
+            .map { dateFormatter.string(from: $0) }
+            .drive(birthTextField.rx.text)
+            .disposed(by: disposeBag)
         
         output.errorMessage
             .drive(onNext: { [weak self] message in
@@ -249,6 +279,18 @@ class ProfileViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // 터치 이벤트를 감지하고 이미지 선택창을 띄움
+               avatarImageTapObservable
+                   .subscribe(onNext: { [weak self] in
+                       self?.presentImagePicker()
+                   })
+                   .disposed(by: disposeBag)
+               
+               // 선택한 이미지가 변경되면 UI 업데이트
+               output.selectedAvatarImage
+                   .drive(profileAvatarImageView.rx.image)
+                   .disposed(by: disposeBag)
     }
 }
 

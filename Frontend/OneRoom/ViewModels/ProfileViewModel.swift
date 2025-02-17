@@ -16,6 +16,7 @@ class ProfileViewModel {
         let phoneNum: Observable<String>
         let gender: Observable<String>
         let birthDate: Observable<String>
+        let avatarImageTap: Observable<Void>
         let completeButtonTap: Observable<Void>
     }
     
@@ -26,12 +27,16 @@ class ProfileViewModel {
         let birthDate: Driver<Date> // 현재 선택된 생년월일
         let completeButtonEnabled: Driver<Bool>
         let errorMessage: Driver<String?> // 에러 메시지 전달
+        let selectedAvatarImage: Driver<UIImage?>
     }
     
     private let disposeBag = DisposeBag()
     
+    
+    private let defaultAvatarImage = UIImage(systemName: "person.circle.fill") // 기본 이미지
+    private let selectedAvatarImageRelay = BehaviorRelay<UIImage?>(value: nil)
+    
     func transform(input: Input) -> Output {
-        let genderOptions = Observable.just(["Male", "Female"])
         
         let isProfileValid = Observable.combineLatest(input.name, input.displayName,
                                                       input.phoneNum, input.gender, input.birthDate) {
@@ -40,6 +45,8 @@ class ProfileViewModel {
         }.asDriver(onErrorJustReturn: false)
             
         let completeButtonEnabled = isProfileValid
+        
+        let genderOptions = Observable.just(["Male", "Female"])
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -91,14 +98,25 @@ class ProfileViewModel {
             })
 
         profileInputEvent.subscribe().disposed(by: disposeBag)
+        
+        let avatarImageDriver = selectedAvatarImageRelay
+            .asDriver(onErrorJustReturn: defaultAvatarImage) // 에러 발생 시 기본 이미지 반환
+            .map { $0 ?? self.defaultAvatarImage } // nil 값 방지
 
+                
         return Output(
             isProfileValid: isProfileValid,
             genderOptions: genderOptions.asDriver(onErrorJustReturn: []),
             selectedGender: input.gender.asDriver(onErrorJustReturn: "Male"),
             birthDate: birthDateObservable.asDriver(onErrorJustReturn: Date()),
             completeButtonEnabled: completeButtonEnabled,
-            errorMessage: errorMessage.asDriver(onErrorJustReturn: nil)
+            errorMessage: errorMessage.asDriver(onErrorJustReturn: nil),
+            selectedAvatarImage: avatarImageDriver
         )
     }
+    
+    // ViewController에서 이미지 업데이트 요청
+       func updateSelectedImage(_ image: UIImage?) {
+           selectedAvatarImageRelay.accept(image)
+       }
 }

@@ -57,7 +57,7 @@ class LoginViewModel {
             .asDriver(onErrorDriveWith: Driver.empty())
         
         let navigateToLogin = loginResult
-            .map { (($0.user.bio?.isEmpty) == nil) }
+            .map { !($0.user.name.isEmpty) }
             .asDriver(onErrorDriveWith: .empty())
         
         let errorMessage = loginEvent

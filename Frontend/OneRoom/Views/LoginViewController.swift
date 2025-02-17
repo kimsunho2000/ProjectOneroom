@@ -171,12 +171,11 @@ class LoginViewController: UIViewController {
                 if isProfileComplete {
                     // Main 화면으로 이동
                     let mainVC = MainViewController()
-                    self.navigationController?.pushViewController(mainVC, animated: true)
+                    Utility.shared.replaceRootViewController(with: mainVC)
                 } else {
                     // Profile 작성 화면으로 이동
                     let profileVC = ProfileViewController()
                     Utility.shared.replaceRootViewController(with: profileVC)
-                    //self.navigationController?.pushViewController(profileVC, animated: true)
                 }
             })
             .disposed(by: disposeBag)
