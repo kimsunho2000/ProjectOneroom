@@ -7,6 +7,7 @@ export const userProfile = async (req, res) => {
         }
         const userId = req.session.passport?.user;// 세션에서 유저 ID 가져오기
         const updates = req.body; // 업데이트할 데이터
+
         // MongoDB에서 해당 유저 업데이트
         const updatedUser = await User.findByIdAndUpdate(userId, updates);
         if (!updatedUser) {

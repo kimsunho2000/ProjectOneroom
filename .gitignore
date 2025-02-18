@@ -103,4 +103,7 @@ iOSInjectionProject/
 .env.local
 .env.production
 .env.development
+
+# uploads 파일 무시
+**/uploads/
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode

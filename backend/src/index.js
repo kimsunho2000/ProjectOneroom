@@ -8,11 +8,20 @@ import userRoutes from './routes/userRoutes.js'
 import loginRoutes from './routes/loginRoutes.js'
 import connectDB from './config/db.js'
 import dotenv from 'dotenv'
+import fs from 'fs'
 
 const __dirname = path.resolve();
 const app = express();
 
 dotenv.config()
+
+// 업로드 폴더 경로 설정 (현재 실행 중인 폴더 기준)
+const uploadDir = path.join(process.cwd(), "uploads");
+
+// 서버 실행 시 `uploads/` 폴더가 없으면 자동 생성
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 // Body Parser 설정
 app.use(bodyParser.urlencoded({ extended: false }));

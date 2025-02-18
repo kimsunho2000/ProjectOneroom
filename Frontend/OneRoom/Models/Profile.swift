@@ -14,7 +14,6 @@ struct Profile: Codable {
     var phoneNumber: String
     var bio: String
     var birthDate: Date
-    var profileImageUrl: String
     
     // JSON 변환을 위한 딕셔너리 프로퍼티
     var dictionary: [String: Any] {
@@ -26,7 +25,6 @@ struct Profile: Codable {
             "phoneNumber": phoneNumber,
             "bio": bio,
             "birthDate": dateFormatter.string(from: birthDate),
-            "profileImageUrl": profileImageUrl
         ]
     }
     init (
@@ -34,8 +32,7 @@ struct Profile: Codable {
         displayName: String,
         phoneNumber: String,
         bio: String,
-        birthDate: Date,
-        profileImageUrl: String
+        birthDate: Date
     )
     {
         self.name = name
@@ -43,7 +40,6 @@ struct Profile: Codable {
         self.phoneNumber = phoneNumber
         self.bio = bio
         self.birthDate = birthDate
-        self.profileImageUrl = profileImageUrl
     }
 }
 

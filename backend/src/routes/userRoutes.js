@@ -1,6 +1,7 @@
 import express from 'express';
 import { registerUser } from '../controllers/user.js';
 import { userProfile } from "../controllers/profile.js";
+import {imageUpload} from "../controllers/imageUpload.js";
 
 const router = express.Router();
 
@@ -9,5 +10,8 @@ router.post('/', registerUser);
 
 // PATCH /user/profile -> 프로필 추가 및 수정
 router.patch('/profile', userProfile);
+
+// POST /user/profile/upload -> 프로필 사진 저장
+router.post('/profile/upload', imageUpload)
 
 export default router;

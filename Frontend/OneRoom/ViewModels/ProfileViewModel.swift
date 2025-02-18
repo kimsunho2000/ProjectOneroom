@@ -85,8 +85,7 @@ class ProfileViewModel {
                     displayName: displayName,
                     phoneNumber: phoneNum,
                     bio: gender,
-                    birthDate: birthDate,
-                    profileImageUrl: ""
+                    birthDate: birthDate
                 )
 
                 return ProfileManager.shared.patchProfile(profile: profile)
