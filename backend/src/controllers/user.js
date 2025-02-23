@@ -43,3 +43,26 @@ export const registerUser = async (req, res) => {
         console.error(e);
     }
 }
+
+
+export const deleteUser = async (req, res) => {
+    try {
+        if (!req.session.passport?.user) {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+        const userId = req.session.passport?.user;// 세션에서 유저 ID 가져오기
+
+        // MongoDB에서 해당 유저 계정 정보 삭제
+        const removeUser = await User.findByIdAndDelete(userId);
+        if (!removeUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        console.log("삭제 성공" , removeUser);
+        return res.status(201).json( { message: "Delete success", User: userId });
+    }
+    catch
+        (error)
+        {
+            res.status(500).json({error: error.message});
+        }
+}
